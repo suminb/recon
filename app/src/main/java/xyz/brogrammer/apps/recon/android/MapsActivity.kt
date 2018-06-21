@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.android_recon.recon
+package xyz.brogrammer.apps.recon.android
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import xyz.brogrammer.apps.android_recon.android.R
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 

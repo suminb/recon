@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.android_recon.recon
+package xyz.brogrammer.apps.recon.android
 
 import android.Manifest
 import android.content.BroadcastReceiver
@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+import xyz.brogrammer.apps.android_recon.android.R
 
 class MainActivity : AppCompatActivity() {
 

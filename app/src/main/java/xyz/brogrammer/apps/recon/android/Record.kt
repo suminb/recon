@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.android_recon.recon
+package xyz.brogrammer.apps.recon.android
 
 class Record(
         private val mac: String,
