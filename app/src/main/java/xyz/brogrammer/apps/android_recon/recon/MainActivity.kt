@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     private val PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 1001
 
+    var cache = HashMap<String, Record>()
+    lateinit var wifiManager: WifiManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -71,16 +74,14 @@ class MainActivity : AppCompatActivity() {
         startScanning()
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    // var resultList = ArrayList<ScanResult>()
-    lateinit var wifiManager: WifiManager
-
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.d("TEST", "%s".format(wifiManager.scanResults))
             for (result in wifiManager.scanResults) {
-                Log.d("TEST", "%s %s %s %s %s".format(result.BSSID, result.level, result.SSID, result.frequency, result.capabilities))
+                val mac = result.BSSID
+                cache[mac] = Record(mac, result.SSID, result.level, result.frequency,
+                        result.channelWidth, result.timestamp, result.capabilities)
+                Log.d("TEST", cache[mac].toString())
             }
         }
     }
