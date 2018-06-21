@@ -61,10 +61,9 @@ class MainActivity : AppCompatActivity() {
         Log.d("TEST", "SDK_INT = %d".format(Build.VERSION.SDK_INT))
         Log.d("TEST", "Permission check = %d".format(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)))
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION)
-        }
-        else {
+        } else {
             startScanning()
         }
     }
@@ -83,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                         result.channelWidth, result.timestamp, result.capabilities)
                 Log.d("TEST", cache[mac].toString())
             }
+            Log.d("TEST", "# of records = %d".format(cache.size))
         }
     }
 
@@ -95,10 +95,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("TEST", "wifiState = %s".format(wifiManager.wifiState))
 
         wifiManager.startScan()
-
-        Handler().postDelayed({
-            stopScanning()
-        }, 10000)
     }
 
     private fun stopScanning() {
