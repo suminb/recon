@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="xyz.brogrammer.apps.android_recon.android.xyz.brogrammer.apps.recon.android.MainActivity">
     <item
+        android:id="@+id/action_maps_view"
+        android:orderInCategory="100"
+        android:title="@string/action_maps_view"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

@@ -12,11 +12,13 @@ import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.brogrammer.apps.android_recon.android.R
 
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity() {
 
         wifiManager = this.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        val button = findViewById(R.id.fab) as FloatingActionButton
+        button.setOnClickListener {
+            Log.i("INFO", "Button clicked!")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,6 +62,11 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
+            R.id.action_maps_view -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
@@ -117,17 +129,11 @@ class MainActivity : AppCompatActivity() {
     private fun startScanning() {
         registerReceiver(broadcastReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
 
-        Log.d("TEST", "isWifiEnabled? %s".format(wifiManager.isWifiEnabled))
-        Log.d("TEST", "isScanAlwaysAvailable? %s".format(wifiManager.isScanAlwaysAvailable))
-        Log.d("TEST", "is5GHzBandSupported? %s".format(wifiManager.is5GHzBandSupported))
-        Log.d("TEST", "wifiState = %s".format(wifiManager.wifiState))
-
         wifiManager.startScan()
     }
 
     private fun stopScanning() {
         unregisterReceiver(broadcastReceiver)
-        Log.d("TEST", "stopScanning()")
     }
 
     private fun startLocationService() {
