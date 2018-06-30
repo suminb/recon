@@ -12,13 +12,12 @@ import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
+import android.widget.TextView
+import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.brogrammer.apps.android_recon.android.R
 
@@ -37,18 +36,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         wifiManager = this.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
-        val button = findViewById(R.id.fab) as FloatingActionButton
-        button.setOnClickListener {
-            Log.i("INFO", "Button clicked!")
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,7 +95,9 @@ class MainActivity : AppCompatActivity() {
                         result.channelWidth, result.timestamp, result.capabilities)
                 // Log.d("TEST", cache[mac].toString())
             }
-            // Log.d("TEST", "# of records = %d".format(cache.size))
+
+            val textViewWifiCount = findViewById(R.id.textViewWifiCount) as TextView
+            textViewWifiCount.text = "# of Wi-Fi stations found: %d".format(cache.size)
         }
     }
 
@@ -114,6 +105,9 @@ class MainActivity : AppCompatActivity() {
         override fun onLocationChanged(location: Location) {
             Log.d("TEST", "%f, %f".format(location.longitude, location.latitude));
             currentLocation = location
+
+            val textViewLocation = findViewById(R.id.textViewLocation) as TextView
+            textViewLocation.text = "Current location: %f, %f".format(location.latitude, location.longitude)
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
             Log.d("TEST", "onStatusChanged")
