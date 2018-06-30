@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.brogrammer.apps.android_recon.android.R
 
@@ -51,11 +50,6 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_maps_view -> {
-                val intent = Intent(this, MapsActivity::class.java)
-                startActivity(intent)
-                return true
-            }
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
