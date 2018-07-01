@@ -12,4 +12,8 @@ class Record(
     override fun toString(): String {
         return "$mac ($ssid): $frequency:$signalStrengh:$channelWidth @$timestamp: $capabilities"
     }
+
+    fun asCSV(): String {
+        return "$timestamp, $mac, \"$ssid\", $frequency, $signalStrengh, \"$capabilities\"\n"
+    }
 }

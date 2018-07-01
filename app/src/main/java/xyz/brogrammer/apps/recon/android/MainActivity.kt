@@ -19,16 +19,22 @@ import android.view.MenuItem
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.brogrammer.apps.android_recon.android.R
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 
 class MainActivity : AppCompatActivity() {
 
     private val PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION = 1001
     private val PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION = 1002
+    private val PERMISSIONS_REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 1003
 
     var cache = HashMap<String, Record>()
     var currentLocation: Location? = null
     lateinit var wifiManager: WifiManager
     lateinit var locationManager: LocationManager
+
+    var fileWriter: FileWriter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,23 +78,37 @@ class MainActivity : AppCompatActivity() {
         } else {
             startLocationService()
         }
+
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE_WRITE_EXTERNAL_STORAGE)
+        }
+        else {
+            fileWriter = FileWriter(File("/sdcard/Download/records.csv"))
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        startScanning()
-        startLocationService()
+
+        when (requestCode) {
+            PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION -> startScanning()
+            PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION -> startLocationService()
+            PERMISSIONS_REQUEST_CODE_WRITE_EXTERNAL_STORAGE -> fileWriter = FileWriter(File("/sdcard/Download/records.csv"))
+        }
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            // Log.d("TEST", "%s".format(wifiManager.scanResults))
             for (result in wifiManager.scanResults) {
                 val mac = result.BSSID
-                cache[mac] = Record(mac, result.SSID, result.level, result.frequency,
+                val record = Record(mac, result.SSID, result.level, result.frequency,
                         result.channelWidth, result.timestamp, result.capabilities)
-                // Log.d("TEST", cache[mac].toString())
+
+                cache[mac] = record
+                fileWriter?.write(record.asCSV())
             }
+            fileWriter?.flush()
+            Log.d("FILE", "fileWriter = %s".format(fileWriter))
 
             val textViewWifiCount = findViewById(R.id.textViewWifiCount) as TextView
             textViewWifiCount.text = "# of Wi-Fi stations found: %d".format(cache.size)
