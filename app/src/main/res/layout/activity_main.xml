@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="xyz.brogrammer.apps.recon.android.MainActivity">
+    tools:context="io.shortbread.apps.recon.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

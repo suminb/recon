@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.recon.android
+package io.shortbread.apps.recon
 
 import android.Manifest
 import android.content.BroadcastReceiver
@@ -19,7 +19,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.db.*
-import xyz.brogrammer.apps.android_recon.android.R
+import io.shortbread.apps.recon.android.R
 import java.io.File
 import java.io.FileWriter
 

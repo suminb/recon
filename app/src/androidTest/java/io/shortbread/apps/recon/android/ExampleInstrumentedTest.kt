@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.android_recon.android
+package io.shortbread.apps.recon.android
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("xyz.brogrammer.apps.android_recon.recon", appContext.packageName)
+        assertEquals("io.shortbread.apps.recon", appContext.packageName)
     }
 }

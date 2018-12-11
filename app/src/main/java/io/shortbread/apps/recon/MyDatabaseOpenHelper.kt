@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.recon.android
+package io.shortbread.apps.recon
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

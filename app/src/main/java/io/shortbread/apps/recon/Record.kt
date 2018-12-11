@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.recon.android
+package io.shortbread.apps.recon
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

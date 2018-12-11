@@ -1,4 +1,4 @@
-package xyz.brogrammer.apps.android_recon.android
+package io.shortbread.apps.recon.android
 
 import org.junit.Test
 

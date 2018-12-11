@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "xyz.brogrammer.apps.android_recon.recon"
+        applicationId "io.shortbread.apps.recon"
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
