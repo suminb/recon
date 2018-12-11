@@ -18,8 +18,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.db.*
 import xyz.brogrammer.apps.android_recon.android.R
-import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 
@@ -79,11 +79,49 @@ class MainActivity : AppCompatActivity() {
             startLocationService()
         }
 
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE_WRITE_EXTERNAL_STORAGE)
+//        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE_WRITE_EXTERNAL_STORAGE)
+//        }
+//        else {
+//            fileWriter = FileWriter(File("/sdcard/Download/records.csv"))
+//        }
+
+        Log.d("Anko", "Working with database ${database.databaseName}...")
+        database.use {
+            createTable(
+                    "Record", true,
+                    "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                    "mac" to TEXT,
+                    "ssid" to TEXT,
+                    "signal_strength" to INTEGER,
+                    "frequency" to INTEGER,
+                    "channel_width" to INTEGER,
+                    "timestamp" to INTEGER,
+                    "capabilities" to TEXT)
+            Log.d("Anko", "Test table has been created")
         }
-        else {
-            fileWriter = FileWriter(File("/sdcard/Download/records.csv"))
+
+        database.use {
+            insert("Record", "ssid" to "Starbucks")
+            insert("Record", "ssid" to "AT&T")
+            Log.d("Anko", "Records have been inserted")
+        }
+
+        database.use {
+            var x = 0
+            select("Record", "id", "ssid")
+                    .parseList(object: MapRowParser<Record> {
+                        override fun parseRow(columns: Map<String, Any?>): Record {
+                            val id = columns.getValue("id") as Long
+                            val ssid = columns.getValue("ssid") as String
+                            val record = Record("(mac)", ssid, 0, 0, 0, 0, "")
+
+                            Log.d("Anko", "Record = $x, $id, $record")
+                            x += 1
+
+                            return record
+                        }
+                    })
         }
     }
 
