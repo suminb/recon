@@ -4,14 +4,14 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
 
-class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "database", null, 1) {
+class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "database", null, 1) {
     companion object {
-        private var instance: MyDatabaseOpenHelper? = null
+        private var instance: DatabaseOpenHelper? = null
 
         @Synchronized
-        fun getInstance(ctx: Context): MyDatabaseOpenHelper {
+        fun getInstance(ctx: Context): DatabaseOpenHelper {
             if (instance == null) {
-                instance = MyDatabaseOpenHelper(ctx.getApplicationContext())
+                instance = DatabaseOpenHelper(ctx.getApplicationContext())
             }
             return instance!!
         }
@@ -27,5 +27,5 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "databas
 }
 
 // Access property for Context
-val Context.database: MyDatabaseOpenHelper
-    get() = MyDatabaseOpenHelper.getInstance(getApplicationContext())
+val Context.database: DatabaseOpenHelper
+    get() = DatabaseOpenHelper.getInstance(getApplicationContext())
